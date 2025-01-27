@@ -10,7 +10,7 @@
 <body class="bg-gray-50 dark:bg-gray-700 text-indigo-700 dark:text-slate-100">
 
     <div class="container mx-auto mt-4">
-     <h1 class="text-3xl tracking-wider">Notes</h1>
+     <h1 class="text-3xl tracking-wider">Notizen</h1>
     </div>
 
     <div class="container mx-auto mt-6 bg-white dark:bg-gray-800 shadow-md rounded-lg p-6">
@@ -24,7 +24,7 @@
                     type="text"
                     id="title"
                     name="title"
-                    class="mt-1 block w-full px-4 py-2 border border-orange-500 rounded-lg shadow-sm focus:ring-orange-500 focus:border-orange-500 dark:bg-gray-700 dark:text-orange-500 dark:border-gray-600"
+                    class="mt-1 block w-full px-4 py-2 border border-white rounded-lg shadow-sm focus:ring-white focus:border-white dark:bg-gray-700 dark:text-white dark:border-gray-600"
                     placeholder="Gib den Titel ein"
                     required
                 >
@@ -54,9 +54,23 @@
 
     <div class="flex flex-col container mx-auto mt-2 space-y-2">
         @foreach ($notes as $note)
-        <div class="bg-gray-200 rounded p-2">
-            <a class="text-xl text-orange-500" href="/notes/{{$note->id }}">{{ $note->title }}</a>
-            <p class="dark:text-gray-700">{!! $note->content !!}</p>
+        <div class="bg-gray-800 rounded p-2 flex space-x-3 items-center justify-between">
+            <div>
+                <a class="text-xl text-orange-500" href="/notes/{{$note->id }}">{{ $note->title }}</a>
+                <p class="dark:text-white">{!! $note->content !!}</p>
+            </div>
+            <div>
+                <form action="{{ route('notes.destroy', $note->id) }}" method="post">
+
+                    @csrf
+                    @method('DELETE')
+
+                    <button>
+                        <x-Trash />
+                        <span class="sr-only">{{__('Delete note')}}</span>
+                    </button>
+                </form>
+            </div>
         </div>
         @endforeach
     </div>
