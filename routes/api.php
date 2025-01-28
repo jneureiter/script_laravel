@@ -14,7 +14,7 @@ Route::get('/user', function (Request $request) {
  */
 Route::get('/notes', [RestController::class, 'index'])
     ->name('rest.index')
-    ->middleware('auth:sanctum');
+    ->middleware('auth:sanctum', 'abilities:notes:all');
 
 Route::get('/notes/{id}', [RestController::class, 'show'])
     ->name('rest.show')
