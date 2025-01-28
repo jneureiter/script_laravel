@@ -3,6 +3,7 @@
 use App\Http\Controllers\NoteController;
 use App\Http\Controllers\RestController;
 use App\Models\Note;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -41,12 +42,58 @@ Route::get('/notes/{note}/edit', [NoteController::class, 'edit'])
 Route::patch('/notes/{note}', [NoteController::class, 'update'])
     ->name('notes.update');
 
+//3|5r5le87zTgIPhPkwsFkeIPr0hJRxjmBF0xEhJEbe74f033c9
+Route::get('/login-single', function (){
+    $res = Auth::attempt([
+            'email' => 'max.muster@example.com',
+            'password' => 'max']
+    );
 
-/**
- * REST - api.php
- */
-Route::get('/api/notes', [RestController::class, 'index'])
-    ->name('rest.index');
+    if($res == true){
 
-Route::get('/api/notes/{id}', [RestController::class, 'show'])
-    ->name('rest.show');
+        $token = auth()->user()->createToken('Demo Single', ['notes:singe']);
+
+        return 'Ergebnis: ' . $token->plainTextToken;
+    }
+
+
+    return 'Falsch';
+});
+
+//4|9jHO4sTtEDGwdh58WOOuEM0GjYv3NBE8tJgYXIVSf2a36684
+Route::get('/login-all', function (){
+    $res = Auth::attempt([
+            'email' => 'max.muster@example.com',
+            'password' => 'max']
+    );
+
+    if($res == true){
+
+        $token = auth()->user()->createToken('Demo all', ['notes:all']);
+
+        return 'Ergebnis: ' . $token->plainTextToken;
+    }
+
+
+    return 'Falsch';
+});
+
+// 2|9c7wSgS8YW7kTB5dTg6RP0dNlqQ6p7zaBn8QOblZc9a2781c
+Route::get('/login', function(){
+
+    $res = Auth::attempt([
+        'email' => 'max.muster@example.com',
+        'password' => 'max']
+    );
+
+    if($res == true){
+
+        $token = auth()->user()->createToken('Demo 1');
+
+        return 'Ergebnis: ' . $token->plainTextToken;
+    }
+
+
+    return 'Falsch';
+
+});
