@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\NoteController;
 use App\Http\Controllers\RestController;
+use App\Http\Controllers\TokenController;
 use App\Models\Note;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -97,3 +98,10 @@ Route::get('/login', function(){
     return 'Falsch';
 
 });
+
+
+// Route für die Ansicht
+Route::get('/token-generator', [TokenController::class, 'showTokenGenerator'])->name('token.view');
+
+// Route für die Token-Generierung
+Route::post('/generate-token', [TokenController::class, 'generateToken'])->name('generate.token');
