@@ -17,6 +17,8 @@ class Note {
     public $id;
     public $title;
 
+    public $author;
+
     // user text
     public $content;
 
@@ -54,7 +56,8 @@ class Note {
     public static function update(Note $note) {
         $metadata = array(
             'title' => $note->title,
-            'id' => $note->id
+            'id' => $note->id,
+            'author' => $note->author
         );
 
         $frontmatter = Yaml::dump($metadata, 2, 4, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK);
@@ -73,7 +76,8 @@ class Note {
 
         $metadata = array(
             'title' => $note->title,
-            'id' => $note->id
+            'id' => $note->id,
+            'author' => auth()->user()->getAuthIdentifier()
         );
 
         $frontmatter = Yaml::dump($metadata, 2, 4, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK);
@@ -98,6 +102,7 @@ class Note {
         })->map(function ($document) {
             $note = new Note($document->id, $document->title);
             $note->content = $document->body();
+            $note->author = $document->author;
 
             return $note;
 

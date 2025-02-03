@@ -97,7 +97,7 @@ Route::get('/login', function(){
 
     return 'Falsch';
 
-});
+});//->name('login')
 
 
 // Route für die Ansicht
